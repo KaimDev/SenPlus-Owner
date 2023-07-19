@@ -6,11 +6,13 @@ require("dotenv").config();
 // Replace 'YOUR_BOT_TOKEN' with your own bot token
 const botToken: BotToken = process.env.TOKEN;
 
-if (!botToken) {
-  throw new Error("Token is missing");
-}
+console.log(`TOKEN: ${botToken}`);
 
-const bot: TelegramBot = new TelegramBot(botToken, { polling: true });
+// if (!botToken) {
+//   throw new Error("Token is missing");
+// }
+
+const bot: TelegramBot = new TelegramBot(botToken!, { polling: true });
 
 console.log("Bot On");
 
@@ -36,7 +38,7 @@ bot.on("message", (message: Message) => {
     try {
       // Extract the command name without ("/")
       const commandName = text.slice(1).toLowerCase();
-      const executeCommand: Command = require(`./commands/${commandName}.ts`);
+      const executeCommand: Command = require(`./commands/${commandName}.js`);
       executeCommand(bot, chatId);
     } catch (e) {
       bot.sendMessage(chatId, `${text} is not a valid command`);
