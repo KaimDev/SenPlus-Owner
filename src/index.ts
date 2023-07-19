@@ -2,6 +2,7 @@ import TelegramBot = require("node-telegram-bot-api");
 import { Message } from "node-telegram-bot-api";
 import { BotToken, Command } from "./types";
 import { sendLog } from "./owner/send-log";
+import { Server } from "./server";
 require("dotenv").config();
 
 // Replace 'YOUR_BOT_TOKEN' with your own bot token
@@ -23,6 +24,9 @@ if (typeof owner === "undefined") {
 if (typeof oChat === "undefined") {
   console.error("The owner chat is undefined");
 }
+
+// Server On
+Server();
 
 const bot: TelegramBot = new TelegramBot(botToken!, { polling: true });
 
