@@ -1,6 +1,6 @@
 import TelegramBot from "node-telegram-bot-api";
 
-function ping(bot: TelegramBot, chatId: number) {
+function ping(bot: TelegramBot, chatId: number): void {
     bot.sendMessage(chatId, "Pong!");
 }
 
