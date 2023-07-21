@@ -32,5 +32,5 @@ export async function sendLog(
     message: messageLog,
   };
 
-  await bot.sendMessage(chatId, `${JSON.stringify(log, null, 2)}`);
+  bot.sendMessage(chatId, `${JSON.stringify(log, null, 2)}`);
 }
