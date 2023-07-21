@@ -122,7 +122,7 @@ bot.on("message", (message: Message) => {
 });
 
 function isSenError(error: unknown): error is ISenError {
-  return (error as ISenError).code !== undefined;
+  return (error as ISenError).message !== undefined;
 }
 
 function isTelegramError(error: unknown): error is ITelegramError {
