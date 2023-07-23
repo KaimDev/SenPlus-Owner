@@ -50,3 +50,9 @@ export type Chat = {
   messageId: number;
   username?: string;
 }
+
+// DTO
+export interface IMessageDTO {
+  text: string;
+  chatId: number;
+}

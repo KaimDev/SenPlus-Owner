@@ -2,7 +2,7 @@ import TelegramBot = require("node-telegram-bot-api");
 import { Message } from "node-telegram-bot-api";
 import { BotToken, Chat, Command, ISenError, ITelegramError } from "./types";
 import { sendLog } from "./owner/send-log";
-import { Server } from "./server";
+import { Server } from "./server/server";
 import { setCommands } from "./commands/set-commands";
 import { SenError } from "./sen-error";
 import { replyMessage } from "./utils/reply-message";
@@ -40,7 +40,7 @@ if (typeof oChat === "undefined") {
   handleExit();
 }
 
-const bot: TelegramBot = new TelegramBot(botToken!, { polling: true });
+export const bot: TelegramBot = new TelegramBot(botToken!, { polling: true });
 
 const ownerChat: number = parseInt(oChat!);
 
