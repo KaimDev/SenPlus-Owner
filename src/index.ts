@@ -2,10 +2,11 @@ import TelegramBot = require("node-telegram-bot-api");
 import { Message } from "node-telegram-bot-api";
 import { BotToken, Chat, Command, ISenError, ITelegramError } from "./types";
 import { sendLog } from "./owner/send-log";
-import { Server } from "./server";
+import { Server } from "./server/server";
 import { setCommands } from "./commands/set-commands";
 import { SenError } from "./sen-error";
 import { replyMessage } from "./utils/reply-message";
+import { User } from "./models/user.interface";
 require("dotenv").config();
 
 const botToken: BotToken = process.env.TOKEN;
@@ -40,7 +41,7 @@ if (typeof oChat === "undefined") {
   handleExit();
 }
 
-const bot: TelegramBot = new TelegramBot(botToken!, { polling: true });
+export const bot: TelegramBot = new TelegramBot(botToken!, { polling: true });
 
 const ownerChat: number = parseInt(oChat!);
 
@@ -57,6 +58,11 @@ setCommands(bot);
 bot.on("message", (message: Message) => {
   const chatId = message.chat.id;
   const text = message.text;
+
+  const user: User = {
+    chatId: chatId,
+    username: message.chat.username,
+  }
 
   try {
 
@@ -75,13 +81,11 @@ bot.on("message", (message: Message) => {
     }
 
     // COMMAND HANDLER
-    if (text === "/start") {
-      bot.sendMessage(chatId, "Hi there!");
-    } else if (text[0] === "/") {
+    if (text[0] === "/") {
       // Extract the command name without ("/")
       const commandName = text.slice(1).toLowerCase();
       const executeCommand: Command = require(`./commands/${commandName}.js`);
-      executeCommand(bot, chatId);
+      executeCommand(bot, user);
     } else {
       bot.sendMessage(chatId, `You said: ${text}`);
     }
@@ -92,7 +96,7 @@ bot.on("message", (message: Message) => {
 
     // Send Log
     if (typeof message.text !== "undefined") {
-      sendLog(bot, ownerChat, message);
+      sendLog(message);
     }
 
   } catch (error: unknown) {

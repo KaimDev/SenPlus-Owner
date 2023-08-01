@@ -1,14 +1,15 @@
 import TelegramBot, { Message } from "node-telegram-bot-api";
 import { MessageLog, OwnerLog } from "../types";
+import { bot } from "..";
+require("dotenv").config();
 
 export async function sendLog(
-  bot: TelegramBot,
-  chatId: number,
   message: Message
 ) {
   const id = message.chat.id;
   let username = message.chat.username;
   let timestamp: number = message.date;
+  const chatId: TelegramBot.ChatId = process.env.OWNER_CHAT!;
 
   const date: Date = new Date(timestamp * 1000); // Convert to milliseconds by multiplying by 1000
   const formattedDate: string = date.toLocaleDateString(); // Get the formatted date string
