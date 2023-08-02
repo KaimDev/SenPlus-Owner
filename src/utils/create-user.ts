@@ -21,9 +21,15 @@ export async function createUser({ chatId, username, role = "USER" }: User) {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => console.log(response.status, response.statusText))
-    .then(() => {
-      bot.sendMessage(ownerChat, `NEW USER WAS CREATED\n ${JSON.stringify(data), null, 2}`);
+    .then((response) => {
+      console.log(response.status, response.statusText);
+      if (response.status === 201)
+        bot.sendMessage(
+          ownerChat,
+          `NEW USER WAS CREATED\n ${JSON.stringify(data, null, 2)}`
+        );
+      else if (response.status === 409)
+        bot.sendMessage(ownerChat, JSON.stringify(`ERROR ${response.status} ${response.statusText}`, null, 2));
     })
     .catch((error) => {
       console.error(error);
