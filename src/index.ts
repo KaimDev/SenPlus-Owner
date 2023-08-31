@@ -134,4 +134,4 @@ function isTelegramError(error: unknown): error is ITelegramError {
 }
 
 // Server On
-Server();
+// Server();

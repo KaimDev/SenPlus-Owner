@@ -5,5 +5,6 @@ export async function setCommands(bot: TelegramBot) {
     { command: "start", description: "Start the bot" },
     { command: "help", description: "Get Help" },
     { command: "ping", description: "Ping Pong" },
+    { command: "task", description: "Set new scheduled task"}
   ]);
 }
